@@ -1,34 +1,35 @@
-const configure = (component, props) => {
-  const componentProps = component?.options?.props
+import Vue from 'vue'
+// const transformName = (string) => string.replace(/\s+/g, '-').toLowerCase()
 
-  if (!props || !componentProps) {
-    return component
-  }
+// export const getConfig = (component, props) => {
+//   const componentProps = component?.options?.props
 
-  const customProps = {}
+//   if (!props || !componentProps) {
+//     return component
+//   }
 
-  Object.keys(props).forEach((customPropName) => {
-    const defaultProp = componentProps[customPropName]
+//   const customProps = {}
 
-    if (!defaultProp) {
-      return
-    }
-    const newDefaultValue = props[customPropName]
+//   Object.keys(props).forEach((customPropName) => {
+//     const defaultProp = componentProps[customPropName]
 
-    console.log('install', newDefaultValue)
+//     if (!defaultProp) {
+//       return
+//     }
+//     const newDefaultValue = props[customPropName]
 
-    customProps[customPropName] = {
-      type: defaultProp?.type,
-      default: ['object', 'function'].includes(typeof newDefaultValue)
-        ? () => newDefaultValue
-        : newDefaultValue
-    }
-  })
+//     console.log('install', newDefaultValue)
 
-  return component.extend({
-    props: customProps
-  })
-}
+//     customProps[customPropName] = {
+//       type: defaultProp?.type,
+//       default: ['object', 'function'].includes(typeof newDefaultValue)
+//         ? () => newDefaultValue
+//         : newDefaultValue
+//     }
+//   })
+
+//   return customProps
+// }
 
 // install function executed by Vue.use()
 // eslint-disable-next-line max-len
@@ -44,25 +45,60 @@ const install = function installNujek(vueInstance, settings) {
     return
   }
 
-  Object.keys(settings).forEach((componentName) => {
-    const componentSettings = settings[componentName]
+  // Object.keys(settings).forEach((componentName) => {
+  //   const componentSettings = settings[componentName]
 
-    if (
-      typeof componentSettings === 'function' &&
-      typeof componentSettings.extend !== undefined
-    ) {
-      const component = componentSettings
-      vueInstance.component(componentName, configure(component))
-      return
-    }
+  //   // if (
+  //   //   typeof componentSettings === 'function' &&
+  //   //   typeof componentSettings.extend !== undefined
+  //   // ) {
+  //   //   const component = componentSettings
+  //   //   vueInstance.component(componentName, configure(component))
+  //   //   return
+  //   // }
 
-    const { component, props } = componentSettings
+  //   const { component, props } = componentSettings
 
-    vueInstance.component(
-      componentName.replace('nj', 'n'),
-      configure(component, props)
-    )
-  })
+  //   configure(component, props)
+
+  //   // vueInstance.component(
+  //   //   componentName.replace('nj', 'n'),
+  //   //   configure(component, props)
+  //   // )
+  // })
+
+  const modsName = 'nujekClasses'
+  const propName = 'types'
+
+  console.log('install nujek plugin')
+
+  // Vue.mixin({
+  //   // Dependency injection forces us to explicitly require that function
+  //   provide: {
+  //     [modsName](baseClass) {
+  //       console.log("$nujekClasses", baseClass)
+  //       // baseClass = baseClass || transformName(this.$options.name)
+  //       // return (this[propName] || []).map((type) => `${baseClass}--${type}`)
+  //       return ' ok'
+  //     },
+  //     nujekConfig(componentName) {
+  //       console.log("$nujekConfig", componentName)
+  //       //Object.keys(settings).forEach((componentName) => {
+  //       //const componentSettings = settings[componentName]
+  //       //const { component, props } = componentSettings
+  //       //return getConfig(component, props)
+  //       //})
+  //       return 'test'
+  //     }
+  //   },
+  //   props: {
+  //     // Prop name is now dynamic and allows to avoid conflits
+  //     [propName]: {
+  //       type: Array,
+  //       default: () => []
+  //     }
+  //   }
+  // })
 }
 
 // Create module definition for Vue.use()
