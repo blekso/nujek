@@ -2,13 +2,13 @@
   <div :class="getThemeClass('wrapper')">
     <slot name="header">
       <header :class="getThemeClass('header')">
-        <div class="col-span-4 flex">
-          <slot name="burger-menu" />
+        <div class="col-span-4 flex items-center">
           <slot name="logo" />
           <slot name="nav" />
         </div>
-        <div class="flex justify-end">
+        <div class="col-span-2 flex justify-end items-center">
           <slot name="toolbar" />
+          <slot name="burger-menu" />
         </div>
       </header>
     </slot>
